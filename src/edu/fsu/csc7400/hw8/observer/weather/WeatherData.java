@@ -2,7 +2,8 @@
  * Class: Object-Oriented Design and Analysis
  * Professor: Orlando Montalvo
  * Assignment: HW 8
- * 
+ * @author Sindhuja Morampudi,Divya Kasu
+ * @version 1.0
  * Date: 2017-10-20
  * 
  * Code taken from HeadFirst Object-Oriented Design Patterns sample
@@ -15,49 +16,15 @@ import java.util.*;
  * WeatherData collects readings from sensors and then broadcasts the values to observers
  *
  */
-public class WeatherData implements Subject {
+public class WeatherData extends Subject {
 	
 	/**
 	 * Default constructor
 	 */
 	public WeatherData() {
-		observers = new ArrayList<Observer>();
+		
 	}
 	
-	/**
-	 * Registers an observer
-	 * 
-	 * @param o the new observer
-	 * 
-	 * @precondition o != null
-	 */
-	public void registerObserver(Observer o) {
-		observers.add(o);
-	}
-	
-	/**
-	 * Removes a registered observer
-	 * 
-	 * @param o observer to remove
-	 * 
-	 * @precondition o != null
-	 */
-	public void removeObserver(Observer o) {
-		int i = observers.indexOf(o);
-		if (i >= 0) {
-			observers.remove(i);
-		}
-	}
-	
-	/**
-	 * Notifies all registered observers of weather changes
-	 */
-	public void notifyObservers() {
-		for (int i = 0; i < observers.size(); i++) {
-			Observer observer = (Observer)observers.get(i);
-			observer.update(temperature, humidity, pressure);
-		}
-	}
 	
 	/**
 	 * Does whatever it needs to do when a sensor sends a change
@@ -101,7 +68,6 @@ public class WeatherData implements Subject {
 		return pressure;
 	}
 
-	private ArrayList<Observer> observers;
 	private float temperature;
 	private float humidity;
 	private float pressure;
