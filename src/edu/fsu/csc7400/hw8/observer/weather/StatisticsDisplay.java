@@ -2,7 +2,8 @@
  * Class: Object-Oriented Design and Analysis
  * Professor: Orlando Montalvo
  * Assignment: HW 8
- * 
+ * @author Sindhuja Morampudi,Divya Kasu
+ * @version 1.0
  * Date: 2017-10-20
  * 
  * Code taken from HeadFirst Object-Oriented Design Patterns sample
@@ -12,19 +13,19 @@ package edu.fsu.csc7400.hw8.observer.weather;
 /**
  * Display of weather statistics
  */
-public class StatisticsDisplay implements Observer, DisplayElement {
+public  class  StatisticsDisplay extends Observer implements  DisplayElement  {
 
 	/**
-	 * Constructor with weather data
+	 * Constructor with weather data which  calls super Constructor
 	 * 
 	 * @param weatherData
 	 *            the weather data for initialization
 	 * 
 	 * @precondition weatherData != null
-	 * @postcondition this will be registered as an observer to weatherData
+	 * @postcondition this will be registered as an observer to Subject
 	 */
 	public StatisticsDisplay(WeatherData weatherData) {
-		weatherData.registerObserver(this);
+		super(weatherData);
 	}
 
 	/**
@@ -37,19 +38,27 @@ public class StatisticsDisplay implements Observer, DisplayElement {
 	 * @param pressure
 	 *            current barometric pressure
 	 */
-	public void update(float temp, float humidity, float pressure) {
-		tempSum += temp;
-		numReadings++;
 
-		if (temp > maxTemp) {
-			maxTemp = temp;
+	@ Override
+	public void update(Subject subject){
+		if (subject instanceof WeatherData) {
+			WeatherData weatherData = (WeatherData)subject;
+			float temp = weatherData.getTemperature();
+			tempSum += temp;
+			numReadings++;
+
+			if (temp > maxTemp) {
+				maxTemp = temp;
+			}
+ 
+			if (temp < minTemp) {
+				minTemp = temp;
+			}
+
+			display();
 		}
 
-		if (temp < minTemp) {
-			minTemp = temp;
-		}
-
-		display();
+		
 	}
 
 	/**
